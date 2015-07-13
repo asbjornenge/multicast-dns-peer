@@ -13,18 +13,35 @@ it('can find peers', function(done) {
 })
 
 it('will answer with passed answers', function(done) {
-    var answer = { name:'testpeers2', type:'A', ttl:5, data:'192.168.1.2'}
+    var answers = [
+        { 
+            name:'p2', 
+            type:'A', 
+            ttl:60,
+            data:'192.168.1.2'
+        },
+        { 
+            name: 'yolo-service',
+            type: 'SRV',
+            ttl:60,
+            data: {
+                port : 9999,
+                target : 'p2-service.yolopeers.local'
+            }
+        }
+    ] 
     var p1 = mdp('testpeers2')
     p1.on('peer', function(peer) {
-        assert(peer.length == 2)
+        assert(peer.length == 3)
         assert(peer[0].data == p2.id)
-        delete peer[1].class
-        assert.deepEqual(peer[1], answer) 
+        var names = peer.map(function(a) { return a.name })
+        assert(names.indexOf(answers[1].name) > 0)
+        assert(names.indexOf(answers[2].name) > 0)
         p1.destroy()
         p2.destroy()
         done()
     })
     var p2 = mdp('testpeers2', {
-        answers : [answer] 
+        answers : answers
     })
 })
