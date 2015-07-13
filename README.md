@@ -1,6 +1,6 @@
 # multicast-dns-peer
 
-Find peers using [multicast-dns]().
+Find peers using [multicast-dns](https://www.npmjs.com/package/multicast-dns).
 
 ## Install
 
@@ -13,7 +13,7 @@ npm install --save multicast-dns-peer
 ```
 var mdp = require('multicast-dns-peer')('yolopeers')
 mdp.on('peer', function(peer) {
-    console.log(peer) // <= some other yolopeer
+    console.log(peer)
     mdp.destroy()
 })
 ```
