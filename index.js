@@ -12,10 +12,11 @@ var mdp = function(peergroup, opts) {
         queryInterval : 5000,
         answers : []
     }, opts)
+    this.id = uuid.v4()
 
     // Prepend ID answer
     this.opts.answers.unshift(
-        { name:this.peergroup, type:'TXT', ttl:300, data:uuid.v4() }
+        { name:this.peergroup, type:'TXT', ttl:300, data:this.id }
     )
 
     this.mdns = multicast()
@@ -38,14 +39,10 @@ mdp.prototype = assign({
         })
     },
     onQuery : function(query) {
-        // TODO: Same for query as for onResponse
-        // - don't respond multiple times!!
         var types = query.questions.map(function(a) { return a.type })
         var names = query.questions.map(function(a) { return a.name })
         if (types.indexOf('TXT') < 0) return
         if (names.indexOf(this.peergroup) < 0) return
-        console.log('got query', query)
-        // Why is this called 4x and not 2x ??
         this.mdns.respond({
             answers : this.opts.answers 
         })
@@ -56,7 +53,7 @@ mdp.prototype = assign({
         var datas = response.answers.map(function(a) { return a.data })
         if (types.indexOf('TXT') < 0) return
         if (names.indexOf(this.peergroup) < 0) return
-        if (datas.indexOf(this.opts.answers[0].data) >= 0) return
+        if (datas.indexOf(this.id) >= 0) return
         this.emit('peer', response.answers)
     },
     destroy : function() {
