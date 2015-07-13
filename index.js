@@ -8,16 +8,14 @@ var mdp = function(peergroup, opts) {
     this.peergroup = peergroup
     this.opts = assign({
         queryInterval : 1000,
-        recordType    : 'A'
+        answers : [
+            { name:this.peergroup, type:'TXT', ttl:300, data:'no peer data' }
+        ]
     }, opts)
 
     this.mdns = multicast()
-    this.mdns.on('response', function(resp) {
-        console.log('got a response packet:', resp)
-    })
-    this.mdns.on('query', function(query) {
-        console.log('got a query packet:', query)
-    })
+    this.mdns.on('query', this.onQuery.bind(this))
+    this.mdns.on('response', this.onResponse.bind(this))
 
     this.query()
     setInterval(this.query.bind(this), this.opts.queryInterval)
@@ -25,6 +23,7 @@ var mdp = function(peergroup, opts) {
 
 mdp.prototype = assign({
     query : function() {
+        // TODO: Make the questions array based on this.opts.answers
         this.mdns.query({
             questions : [
                 {
@@ -33,6 +32,22 @@ mdp.prototype = assign({
                 }
             ]
         })
+    },
+    onQuery : function(query) {
+        query.questions.forEach(function(q) {
+            if (q.name !== this.options.name) return
+            this.mdns.respond({
+                answers : this.opts.answers 
+            })
+        }.bind(this))
+    },
+    onResponse : function(response) {
+        console.log(response)
+        this.emit('peer', response)
+//        resonse.answers.forEach(function(a) {
+//            if (a.type != 'TXT' || a.name != this.options.name) return
+//            this.emit('peer', JSON.parse(a.data))
+//        }.bind(this))
     },
     stop : function() {
         this.mdns.destroy()
