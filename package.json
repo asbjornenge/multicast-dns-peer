@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "deep-equal": "^1.0.0",
     "multicast-dns": "^3.0.0",
+    "node-uuid": "^1.4.3",
     "object.assign": "^3.0.1"
   }
 }

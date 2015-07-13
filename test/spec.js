@@ -6,6 +6,8 @@ it('can find peers', function(done) {
     p1.on('peer', function(peer) {
         console.log('got peer', peer)
         assert(peer = p2)
+        p1.destroy()
+        p2.destroy()
         done()
     })
     var p2 = mdp('testpeers')
