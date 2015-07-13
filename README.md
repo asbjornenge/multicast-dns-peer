@@ -29,17 +29,17 @@ var mdp = require('multicast-dns-peer')('yolopeers', {
     queryInterval : 2000, // how often to query for peers (default 5000)
     answers : [           // additional peer records 
         { 
-            name:'peer2', 
-            type:'A', 
-            ttl:300, 
-            data:'192.168.1.2' 
+            name : 'peer2', 
+            type : 'A', 
+            ttl  : 300, 
+            data : '192.168.1.2' 
         },
         {
-            name: 'yolo-service',
-            type: 'SRV',
-            data: {
-                port:9999,
-                target: 'yolo-service.yolopeers.com'
+            name : 'yolo-service',
+            type : 'SRV',
+            data : {
+                port   : 9999,
+                target : 'yolo-service.yolopeers.com'
             }
         }
     ]
