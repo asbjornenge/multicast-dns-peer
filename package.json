@@ -4,8 +4,12 @@
   "description": "Find peers using [multicast-dns]().",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -R nyan -w --check-leaks"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "multicast-dns": "^3.0.0",
+    "object.assign": "^3.0.1"
+  }
 }

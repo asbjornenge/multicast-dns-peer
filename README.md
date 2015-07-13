@@ -16,9 +16,7 @@ mdp.on('peer', function(peer) {
     console.log(peer)
     mdp.stop()
 })
-mdp({
-    peers : 'yolo'
-})
+mdp('yolopeers')
 ```
 
-enjoy
+enjoy.
