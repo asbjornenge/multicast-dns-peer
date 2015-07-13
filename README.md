@@ -20,7 +20,7 @@ mdp.on('peer', function(peer) {
 
 ## Options
 
-The default peer information is not very useful, it contains only the peer id.
+The default peer information is not very useful, it contains only the peer id.  
 You'll want to add some additional answer records with connection information.
 
 ```
