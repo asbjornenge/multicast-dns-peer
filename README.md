@@ -10,7 +10,7 @@ npm install --save multicast-dns-peer
 
 ## Use
 
-```
+```js
 var mdp = require('multicast-dns-peer')('yolopeers')
 mdp.on('peer', function(peer) {
     console.log(peer)
@@ -21,12 +21,12 @@ mdp.on('peer', function(peer) {
 ## Options
 
 The default peer information is not very useful, it contains only the peer id.  
-You'll want to add some additional answer records with connection information.
+You'll typically want to add some additional answer records with connection information.
 
-```
-{
+```js
+require('multicast-dns-peer')('yolopeers', {
     queryInterval : 2000, // how often to query for peers (default 5000)
-    answers : [
+    answers : [           // peer information
         { name:'peer2', type:'A', ttl:300, data:'192.168.1.2' },
         {
             name: 'yolo-service',
@@ -37,7 +37,7 @@ You'll want to add some additional answer records with connection information.
             }
         }
     ]
-}
+})
 ```
 
 enjoy.
