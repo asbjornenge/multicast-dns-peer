@@ -19,16 +19,21 @@ mdp.on('peer', function(peer) {
 ```
 
 The default peer information is not very useful, it only contains the peer id.  
+You'll typically want to add some additional answer records with connection information (see options).
 
 ## Options
 
-You'll typically want to add some additional answer records with connection information.
 
 ```js
 var mdp = require('multicast-dns-peer')('yolopeers', {
     queryInterval : 2000, // how often to query for peers (default 5000)
-    answers : [           // peer information
-        { name:'peer2', type:'A', ttl:300, data:'192.168.1.2' },
+    answers : [           // additional peer records 
+        { 
+            name:'peer2', 
+            type:'A', 
+            ttl:300, 
+            data:'192.168.1.2' 
+        },
         {
             name: 'yolo-service',
             type: 'SRV',
